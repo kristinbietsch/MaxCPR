@@ -38,16 +38,16 @@ wrapop <- bind_rows(pre2020pop, post2020pop) %>%
 # Bring in Microdata results
 
 # Loop through DHS Calendar Data for TTC.R
-ttc <- read.csv("C:/Users/KristinBietsch/files/Track20/Spacing and Limiting/Code for Updating Default Data/DHSCalendarMicroResults031822.csv") %>%
+ttc <- read.csv("C:/Users/KristinBietsch/files/Track20/Spacing and Limiting/Code for Updating Default Data/DHSCalendarMicroResults021225.csv") %>%
   mutate(Survey=substr(IRfile, 1,8)) %>% select(-IRfile) 
 
 # Loop for DHS MicroData.R
-micro <- read.csv("C:/Users/KristinBietsch/files/Track20/Spacing and Limiting/Code for Updating Default Data/DHSMicroResults031822.csv") 
+micro <- read.csv("C:/Users/KristinBietsch/files/Track20/Spacing and Limiting/Code for Updating Default Data/DHSMicroResults021225.csv") 
 
 #################################################################################################
 #	Ideal Number of Children, All Women (ideal) PR_IDLC_W_MNA
 #	Median Age at First Sex (25-49) (age_fsex) SX_AAFS_W_M2B
-#	Median Age at First Birth (25-49) (age_fbirth) MA_AAFM_W_M2B
+#	Median Age at First Birth (25-49) (age_fbirth) FE_AAFB_W_M2B
 #	Median Birth Interval (Months) (ave_bi) FE_BINT_C_MED
 #	Median Duration of Postpartum Insusceptible (ppi) FE_PPID_W_MDI
 #	CPR, All Women (CPR_all) 	FP_CUSA_W_ANY
@@ -57,7 +57,7 @@ micro <- read.csv("C:/Users/KristinBietsch/files/Track20/Spacing and Limiting/Co
 #	Using to Space, Married Women (Spacing_mar) FP_NADM_W_MNS
 #	Using to Limit, Married Women (Limiting_mar) FP_NADM_W_MNL
 
-url<-("http://api.dhsprogram.com/rest/dhs/data?f=json&indicatorIds=indicatorIds=FE_FRTR_W_TFR,PR_IDLC_W_MNA,SX_AAFS_W_M2B,MA_AAFM_W_M2B,FE_BINT_C_MED,FE_PPID_W_MDI,FP_CUSA_W_ANY,FP_NADA_W_MNS,FP_NADA_W_MNL,FP_CUSM_W_ANY,FP_NADM_W_MNS,FP_NADM_W_MNL&surveyid=all&perpage=20000&APIkey=AVEHTH-279664")
+url<-("http://api.dhsprogram.com/rest/dhs/data?f=json&indicatorIds=indicatorIds=FE_FRTR_W_TFR,PR_IDLC_W_MNA,SX_AAFS_W_M2B,FE_AAFB_W_M2B,FE_BINT_C_MED,FE_PPID_W_MDI,FP_CUSA_W_ANY,FP_NADA_W_MNS,FP_NADA_W_MNL,FP_CUSM_W_ANY,FP_NADM_W_MNS,FP_NADM_W_MNL&surveyid=all&perpage=20000&APIkey=AVEHTH-279664")
 jsondata<-fromJSON(url) 
 dta<-data.table(jsondata$Data)
 data_clean <- dta %>% select(SurveyId, IndicatorId, Value) %>% spread(IndicatorId, Value) %>% rename(API_ID=SurveyId)
@@ -73,7 +73,7 @@ data_recent <- left_join(recent_survey, data_clean, by="API_ID") %>% left_join(c
          Region=Geographic,
          Source=FullYear,
          age_fsex=SX_AAFS_W_M2B,
-         age_fbirth=MA_AAFM_W_M2B,	
+         age_fbirth=FE_AAFB_W_M2B,	
          ave_bi=FE_BINT_C_MED,
          ideal= PR_IDLC_W_MNA,
          ppi=FE_PPID_W_MDI,
@@ -178,7 +178,8 @@ data_recent_clean <- data_recent %>%
 
 # Note: Kristin (3/21/22) In next round of updates add in notes in french and english, add names in French
   
-write.csv(data_recent_clean, "C:/Users/KristinBietsch/files/Track20/Spacing and Limiting/Code for Updating Default Data/SpacingLimitingDefault032122.csv", row.names = F, na="")
+write.csv(data_recent_clean, "C:/Users/KristinBietsch/files/Track20/Spacing and Limiting/Code for Updating Default Data/SpacingLimitingDefault021225.csv", row.names = F, na="")
+#write.csv(data_recent_clean, "C:/Users/KristinBietsch/files/Track20/Spacing and Limiting/Code for Updating Default Data/SpacingLimitingDefault120522.csv", row.names = F, na="")
 
 
 

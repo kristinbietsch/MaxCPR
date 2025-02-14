@@ -6,7 +6,7 @@ library(ggplot2)
 
 # just has miscarriage incorporated
 
-countries <- read.csv("data/SpacingLimitingDefault081519.csv")
+countries <- read.csv("data/SpacingLimitingDefault021225.csv")
 countries$ideal <- round(countries$ideal,0)
 
 countries$s_neversex <- round(countries$s_neversex,1)
@@ -21,6 +21,10 @@ countries$s_birth6 <- round(countries$s_birth6,1)
 countries$s_birth7 <- round(countries$s_birth7,1)
 countries$s_birth8 <- round(countries$s_birth8,1)
 countries$s_birth9 <- round(countries$s_birth9,1)
+countries$ttc <- round(countries$ttc,1)
+
+countries$Notes <- ""
+countries$NotesFR <- ""
 
 # Define UI for app that draws a histogram ----
 ui <- fluidPage(

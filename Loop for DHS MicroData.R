@@ -286,4 +286,5 @@ for (row in 1:nrow(recent_survey_aw2)) {
 
 results <- full_join(results_total, results_dist, by="IRfile") %>% left_join(ID, by="IRfile")
 
-write.csv(results, "C:/Users/KristinBietsch/files/Track20/Spacing and Limiting/Code for Updating Default Data/DHSMicroResults031822.csv", row.names = F, na="")
+write.csv(results, "C:/Users/KristinBietsch/files/Track20/Spacing and Limiting/Code for Updating Default Data/DHSMicroResults021225.csv", row.names = F, na="")
+#write.csv(results, "C:/Users/KristinBietsch/files/Track20/Spacing and Limiting/Code for Updating Default Data/DHSMicroResults031822.csv", row.names = F, na="")
